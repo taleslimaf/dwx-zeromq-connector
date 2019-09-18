@@ -258,6 +258,6 @@ class coin_flip_traders(DWX_ZMQ_Strategy):
         print('\n\n{} .. wait for me.... I\'m going home too! xD\n'.format(self._updater_.getName()))
         
         # Send mass close instruction to MetaTrader in case anything's left.
-        self._zmq._DWX_MTX_CLOSE_ALL_TRADES_()
+        self._zmq._dwx_mtx_close_all_trades_()
         
     ##########################################################################

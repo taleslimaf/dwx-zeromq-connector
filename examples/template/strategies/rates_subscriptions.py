@@ -164,7 +164,7 @@ class rates_subscriptions(DWX_ZMQ_Strategy):
       try:
         # Acquire lock
         self._lock.acquire()
-        self._zmq._DWX_MTX_UNSUBSCRIBE_ALL_MARKETDATA_REQUESTS_()
+        self._zmq._dwx_mtx_unsubscribe_all_marketdata_requests_()
         print('\rUnsubscribing from all topics', end='', flush=True)
           
       finally:
@@ -175,10 +175,10 @@ class rates_subscriptions(DWX_ZMQ_Strategy):
       try:
         # Acquire lock
         self._lock.acquire()
-        self._zmq._DWX_MTX_SEND_TRACKPRICES_REQUEST_([])        
+        self._zmq._dwx_mtx_send_trackprices_request_([])        
         print('\rRemoving symbols list', end='', flush=True)
         sleep(self._delay)
-        self._zmq._DWX_MTX_SEND_TRACKRATES_REQUEST_([])
+        self._zmq._dwx_mtx_send_trackrates_request_([])
         print('\rRemoving instruments list', end='', flush=True)
 
       finally:
@@ -193,8 +193,8 @@ class rates_subscriptions(DWX_ZMQ_Strategy):
     def __subscribe_to_rate_feeds(self):
       """
       Starts the subscription to the self._instruments list setup during construction.
-      1) Setup symbols in Expert Advisor through self._zmq._DWX_MTX_SUBSCRIBE_MARKETDATA_
-      2) Starts price feeding through self._zmq._DWX_MTX_SEND_TRACKRATES_REQUEST_
+      1) Setup symbols in Expert Advisor through self._zmq._dwx_mtx_subscribe_marketdata_
+      2) Starts price feeding through self._zmq._dwx_mtx_send_trackrates_request_
       """
       if len(self._instruments) > 0:
         # subscribe to all instruments' rate feeds
@@ -202,7 +202,7 @@ class rates_subscriptions(DWX_ZMQ_Strategy):
           try:
             # Acquire lock
             self._lock.acquire()
-            self._zmq._DWX_MTX_SUBSCRIBE_MARKETDATA_(_instrument[0], _string_delimiter=';')
+            self._zmq._dwx_mtx_subscribe_marketdata_(_instrument[0], _string_delimiter=';')
             print('\rSubscribed to {} rate feed'.format(_instrument), end='', flush=True)
               
           finally:
@@ -214,7 +214,7 @@ class rates_subscriptions(DWX_ZMQ_Strategy):
         try:
           # Acquire lock
           self._lock.acquire()
-          self._zmq._DWX_MTX_SEND_TRACKRATES_REQUEST_(self._instruments)
+          self._zmq._dwx_mtx_send_trackrates_request_(self._instruments)
           print('\rConfiguring rate feed for {} instruments'.format(len(self._instruments)), end='', flush=True)
             
         finally:

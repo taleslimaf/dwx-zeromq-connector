@@ -30,7 +30,7 @@ class DWX_ZMQ_Reporting():
         self._zmq._set_response_(None)
         
         # Get open trades from MetaTrader
-        self._zmq._DWX_MTX_GET_ALL_OPEN_TRADES_()
+        self._zmq._dwx_mtx_get_all_open_trades_()
 
         # While loop start time reference            
         _ws = to_datetime('now')

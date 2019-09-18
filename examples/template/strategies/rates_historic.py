@@ -114,7 +114,7 @@ class rates_historic(DWX_ZMQ_Strategy):
 
         # request rates
         print('\rRequesting Daily Rates from EURGBP', end='', flush=True)
-        self._zmq._DWX_MTX_SEND_MARKETHIST_REQUEST_(_symbol='EURGBP',
+        self._zmq._dwx_mtx_send_markethist_request_(_symbol='EURGBP',
                                                     _timeframe=1440,
                                                     _start='2019.01.04 00:00:00',
                                                     _end  ='2019.01.14 00:00:00')
@@ -129,7 +129,7 @@ class rates_historic(DWX_ZMQ_Strategy):
       try:
         # Acquire lock
         self._lock.acquire()
-        self._zmq._DWX_MTX_UNSUBSCRIBE_ALL_MARKETDATA_REQUESTS_()
+        self._zmq._dwx_mtx_unsubscribe_all_marketdata_requests_()
         print('\rUnsubscribing from all topics', end='', flush=True)
           
       finally:
