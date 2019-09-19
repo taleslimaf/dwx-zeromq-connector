@@ -293,7 +293,7 @@ ZmqMsg MessageHandler(ZmqMsg &_request) {
    string components[11];
    
    if(_request.size() > 0) {
-   
+       Print("Message received");
       // Get data from request   
       ArrayResize(_data, _request.size());
       _request.getData(_data);
@@ -301,10 +301,10 @@ ZmqMsg MessageHandler(ZmqMsg &_request) {
       
       // Process data
       ParseZmqMessage(dataStr, components);
-      
+      Print(dataStr);
       // Interpret data
       InterpretZmqMessage(&pushSocket, components);
-      
+      Print("Done");
    }
    else {
       // NO DATA RECEIVED
