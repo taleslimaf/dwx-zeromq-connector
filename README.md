@@ -130,7 +130,7 @@ _zmq = DWX_ZeroMQ_Connector()
 
 ### Construct Trade to send via ZeroMQ to MetaTrader:
 ```
-_my_trade = _zmq._generate_default_order_dict()
+_my_trade = _zmq.gen_default_order_dict()
 
 Output: 
 {'_action': 'OPEN',
@@ -155,7 +155,7 @@ _my_trade['_comment'] = 'nerds_rox0r'
 
 ### Send trade to MetaTrader:
 ```
-_zmq._dwx_mtx_new_trade_(_order=_my_trade)
+_zmq.push_new_order(_order=_my_trade)
 
 # MetaTrader response (JSON):
 {'_action': 'EXECUTION', 
@@ -168,7 +168,7 @@ _zmq._dwx_mtx_new_trade_(_order=_my_trade)
 
 ### Get all open trades from MetaTrader:
 ```
-_zmq._dwx_mtx_get_all_open_trades_()
+_zmq.push_req_open_orders()
 
 # MetaTrader response (JSON):
 
@@ -186,7 +186,7 @@ _zmq._dwx_mtx_get_all_open_trades_()
 
 ### Partially close 0.01 lots:
 ```
-_zmq._dwx_mtx_close_partial_by_ticket_(85051741, 0.01)
+_zmq.push_close_order_partial(85051741, 0.01)
 
 # MetaTrader response (JSON):
 {'_action': 'CLOSE', 
@@ -197,7 +197,7 @@ _zmq._dwx_mtx_close_partial_by_ticket_(85051741, 0.01)
 
 # Partially closing a trade renews the ticket ID, retrieve it again.
 
-_zmq._dwx_mtx_get_all_open_trades_()
+_zmq.push_req_open_orders()
 
 # MetaTrader response (JSON):
 {'_action': 'OPEN_TRADES', 
@@ -214,7 +214,7 @@ _zmq._dwx_mtx_get_all_open_trades_()
 
 ### Close a trade by ticket:
 ```
-_zmq._dwx_mtx_close_trade_by_ticket_(85051856)
+_zmq.push_close_order(85051856)
 
 # MetaTrader response (JSON):
 {'_action': 'CLOSE', 
@@ -231,7 +231,7 @@ _zmq._dwx_mtx_close_trade_by_ticket_(85051856)
 
 # Check currently open trades.
 
-_zmq._dwx_mtx_get_all_open_trades_()
+_zmq.push_req_open_orders()
 
 # MetaTrader response (JSON):
 {'_action': 'OPEN_TRADES', 
@@ -245,7 +245,7 @@ _zmq._dwx_mtx_get_all_open_trades_()
 }
 
 # Close all trades with magic number 123456
-_zmq._dwx_mtx_close_trades_by_magic_(123456)
+_zmq.push_close_magic(123456)
 
 # MetaTrader response (JSON):
 {'_action': 'CLOSE_ALL_MAGIC', '_magic': 123456, 
@@ -263,23 +263,23 @@ _zmq._dwx_mtx_close_trades_by_magic_(123456)
 
 # Open 5 trades
 
-_zmq._dwx_mtx_new_trade_()
+_zmq.push_new_order()
 {'_action': 'EXECUTION', '_magic': 123456, '_ticket': 85090920, '_open_price': 1.15379, '_sl': 500, '_tp': 500}
 
-_zmq._dwx_mtx_new_trade_()
+_zmq.push_new_order()
 {'_action': 'EXECUTION', '_magic': 123456, '_ticket': 85090921, '_open_price': 1.15379, '_sl': 500, '_tp': 500}
 
-_zmq._dwx_mtx_new_trade_()
+_zmq.push_new_order()
 {'_action': 'EXECUTION', '_magic': 123456, '_ticket': 85090922, '_open_price': 1.15375, '_sl': 500, '_tp': 500}
 
-_zmq._dwx_mtx_new_trade_()
+_zmq.push_new_order()
 {'_action': 'EXECUTION', '_magic': 123456, '_ticket': 85090926, '_open_price': 1.15378, '_sl': 500, '_tp': 500}
 
-_zmq._dwx_mtx_new_trade_()
+_zmq.push_new_order()
 {'_action': 'EXECUTION', '_magic': 123456, '_ticket': 85090927, '_open_price': 1.15378, '_sl': 500, '_tp': 500}
 
 # Close all open trades
-_zmq._dwx_mtx_close_all_trades_()
+_zmq.push_close_all()
 
 # MetaTrader response (JSON):
 {'_action': 'CLOSE_ALL',
@@ -313,7 +313,7 @@ _zmq._dwx_mtx_close_all_trades_()
 
 ### Subscribe/Unsubscribe to/from EUR/USD bid/ask prices in real-time:
 ```
-_zmq._dwx_mtx_subscribe_marketdata_('EURUSD')
+_zmq.subs_marketdata('EURUSD')
 
 Output:
 [KERNEL] Subscribed to EURUSD BID/ASK updates. See self._Market_Data_DB.

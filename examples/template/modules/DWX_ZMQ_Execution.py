@@ -38,13 +38,13 @@ class DWX_ZMQ_Execution():
         if _exec_dict['_action'] == 'OPEN':
             
             _check = '_action'
-            self._zmq._dwx_mtx_new_trade_(_order=_exec_dict)
+            self._zmq.push_new_order(order=_exec_dict)
             
         # CLOSE TRADE
         elif _exec_dict['_action'] == 'CLOSE':
             
             _check = '_response_value'
-            self._zmq._dwx_mtx_close_trade_by_ticket_(_exec_dict['_ticket'])
+            self._zmq.push_close_order(_exec_dict['_ticket'])
             
         if _verbose:
             print('\n[{}] {} -> MetaTrader'.format(_exec_dict['_comment'],

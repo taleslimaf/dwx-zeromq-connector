@@ -117,7 +117,7 @@ class coin_flip_traders(DWX_ZMQ_Strategy):
         
         print('\n\n+--------------+\n+ LIVE UPDATES +\n+--------------+\n')
         
-        # _verbose can print too much information.. so let's start a thread
+        # _VERBOSE can print too much information.. so let's start a thread
         # that prints an update for instructions flowing through ZeroMQ
         self._updater_ = Thread(name='Live_Updater',
                                target=self._updater_,
@@ -149,7 +149,7 @@ class coin_flip_traders(DWX_ZMQ_Strategy):
     def _trader_(self, _symbol, _max_trades):
         
         # Note: Just for this example, only the Order Type is dynamic.
-        _default_order = self._zmq._generate_default_order_dict()
+        _default_order = self._zmq.gen_default_order_dict()
         _default_order['_symbol'] = _symbol[0]
         _default_order['_lots'] = _symbol[1]
         _default_order['_SL'] = _default_order['_TP'] = 100
@@ -258,6 +258,6 @@ class coin_flip_traders(DWX_ZMQ_Strategy):
         print('\n\n{} .. wait for me.... I\'m going home too! xD\n'.format(self._updater_.getName()))
         
         # Send mass close instruction to MetaTrader in case anything's left.
-        self._zmq._dwx_mtx_close_all_trades_()
+        self._zmq.push_close_all()
         
     ##########################################################################

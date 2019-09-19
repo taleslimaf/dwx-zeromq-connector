@@ -164,7 +164,7 @@ class prices_subscriptions(DWX_ZMQ_Strategy):
       try:
         # Acquire lock
         self._lock.acquire()
-        self._zmq._dwx_mtx_unsubscribe_all_marketdata_requests_()
+        self._zmq.subs_remove_marketdata_all()
         print('\rUnsubscribing from all topics', end='', flush=True)
           
       finally:
@@ -175,10 +175,10 @@ class prices_subscriptions(DWX_ZMQ_Strategy):
       try:
         # Acquire lock
         self._lock.acquire()
-        self._zmq._dwx_mtx_send_trackprices_request_([])        
+        self._zmq.push_req_prices_track([])
         print('\rRemoving symbols list', end='', flush=True)
         sleep(self._delay)
-        self._zmq._dwx_mtx_send_trackrates_request_([])
+        self._zmq.push_req_rates_track([])
         print('\rRemoving instruments list', end='', flush=True)
 
       finally:
@@ -193,8 +193,8 @@ class prices_subscriptions(DWX_ZMQ_Strategy):
     def __subscribe_to_price_feeds(self):
       """
       Starts the subscription to the self._symbols list setup during construction.
-      1) Setup symbols in Expert Advisor through self._zmq._dwx_mtx_subscribe_marketdata_
-      2) Starts price feeding through self._zmq._dwx_mtx_send_trackprices_request_
+      1) Setup symbols in Expert Advisor through self._zmq.subs_marketdata
+      2) Starts price feeding through self._zmq.push_req_prices_track
       """
       if len(self._symbols) > 0:
         # subscribe to all symbols price feeds
@@ -202,7 +202,7 @@ class prices_subscriptions(DWX_ZMQ_Strategy):
           try:
             # Acquire lock
             self._lock.acquire()
-            self._zmq._dwx_mtx_subscribe_marketdata_(_symbol, _string_delimiter=';')
+            self._zmq.subs_marketdata(_symbol, string_delimiter=';')
             print('\rSubscribed to {} price feed'.format(_symbol), end='', flush=True)
               
           finally:
@@ -214,7 +214,7 @@ class prices_subscriptions(DWX_ZMQ_Strategy):
         try:
           # Acquire lock
           self._lock.acquire()
-          self._zmq._dwx_mtx_send_trackprices_request_(self._symbols)
+          self._zmq.push_req_prices_track(self._symbols)
           print('\rConfiguring price feed for {} symbols'.format(len(self._symbols)), end='', flush=True)
             
         finally:

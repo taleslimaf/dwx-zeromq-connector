@@ -86,7 +86,7 @@ TRACK_PRICES
 To enable this new functionality, a new method was added:
 
 ```cpp
-def _dwx_mtx_send_trackprices_request_(self,_symbols=['EURUSD'])
+def push_req_prices_track(self,_symbols=['EURUSD'])
 ```
 
 The MQL4 Server EA was also modified to accept this new command request, to provide an associated response and update the list of symbols managed by itself. The response to this request <```TRACK_PRICES;GDAXI;EURGBP```> is as follows:
@@ -127,7 +127,7 @@ TRACK_RATES
 To enable this new functionality, a new method was added:
 
 ```cpp
-def _dwx_mtx_send_trackrates_request_(self,_instruments=[('EURUSD_M1','EURUSD',1)]):
+def push_req_rates_track(self,_instruments=[('EURUSD_M1','EURUSD',1)]):
 ```  
 
 _Note: Instruments are tuples of 3 parameters (name, symbol, timeframe). In this case, name is formatted as: ```SYMBOL_TIMEFRAME```, where ```TIMEFRAME``` holds values from one of the standard MQL4 timeframes: ```M1,M5,M15,M30,H1,H4,D1,W1,MN1```_
@@ -169,7 +169,7 @@ HIST;SYMBOL;TIMEFRAME;START_TIME;END_TIME
 This functionality was added as a new method:
 
 ```cpp
-def _dwx_mtx_send_markethist_request_(self,
+def push_req_market_hist(self,
                                  _symbol='EURUSD',
                                  _timeframe=1,
                                  _start='2019.01.04 17:00:00',
